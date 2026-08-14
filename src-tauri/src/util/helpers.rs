@@ -3,10 +3,11 @@ use base64::{Engine as _, engine::general_purpose};
 use std::{path::*, process::Command};
 
 use crate::log;
+use crate::util::http::async_client;
 
 #[tauri::command]
 pub async fn fetch_image(url: String) -> Option<String> {
-  let client = reqwest::Client::new();
+  let client = async_client();
   let response = client
     .get(url)
     .header("User-Agent", "Dorion")
