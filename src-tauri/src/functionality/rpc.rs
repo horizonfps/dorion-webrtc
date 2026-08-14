@@ -10,7 +10,7 @@ use sysinfo::{ProcessRefreshKind, RefreshKind, System};
 use tauri::{Emitter, Listener};
 use window_titles::ConnectionTrait;
 
-use crate::{config::get_config, log, util::paths::custom_detectables_path};
+use crate::{config::get_config, log, util::http::blocking_client, util::paths::custom_detectables_path};
 
 // We keep track of this A) To not spam enable and B) to allow for the user to manually disable without it being re-enabled automatically
 static OBS_OPEN: AtomicBool = AtomicBool::new(false);
@@ -66,7 +66,7 @@ pub fn start_rpc_server(win: tauri::WebviewWindow) {
   };
 
   let detectable =
-    match reqwest::blocking::get("https://discord.com/api/v9/applications/detectable") {
+    match blocking_client().get("https://discord.com/api/v9/applications/detectable").send() {
       Ok(resp) => match resp.text() {
         Ok(text) => text,
         Err(e) => {

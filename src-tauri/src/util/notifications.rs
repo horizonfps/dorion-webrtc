@@ -3,6 +3,7 @@ use std::sync::atomic::Ordering;
 use crate::{
   functionality::tray::{TRAY_STATE, TrayIcon, set_tray_icon},
   log,
+  util::http::blocking_client,
   util::window_helpers::ultrashow,
 };
 use tauri::Manager;
@@ -38,7 +39,7 @@ pub fn send_notification(
     return;
   }
 
-  let client = reqwest::blocking::Client::new();
+  let client = blocking_client();
   let mut res = match client.get(icon).send() {
     Ok(res) => res,
     Err(e) => {

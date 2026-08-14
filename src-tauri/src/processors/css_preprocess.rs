@@ -2,6 +2,7 @@ use regex::Regex;
 use std::fs;
 
 use crate::log;
+use crate::util::http::blocking_client;
 use crate::util::paths::get_theme_dir;
 
 #[tauri::command]
@@ -70,7 +71,7 @@ pub fn localize_imports(win: tauri::WebviewWindow, css: String, name: String) ->
     tasks.push(std::thread::spawn(move || {
       log!("Getting: {}", &url);
 
-      let response = match reqwest::blocking::get(format!("https://{}", url)) {
+      let response = match blocking_client().get(format!("https://{}", url)).send() {
         Ok(r) => r,
         Err(e) => {
           log!("Request failed: {}", e);
@@ -273,7 +274,7 @@ pub fn localize_images(win: tauri::WebviewWindow, css: String) -> String {
     tasks.push(std::thread::spawn(move || {
       log!("Getting: {}", &url);
 
-      let response = match reqwest::blocking::get(url) {
+      let response = match blocking_client().get(url).send() {
         Ok(r) => r,
         Err(e) => {
           log!("Request failed: {}", e);
