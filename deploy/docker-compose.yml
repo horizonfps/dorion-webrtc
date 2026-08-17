@@ -27,7 +27,7 @@ services:
       LIVEKIT_API_SECRET: "${LIVEKIT_API_SECRET}"
       LIVEKIT_PUBLIC_URL: "${LIVEKIT_PUBLIC_URL}"
       STREAM_ACCESS_KEY: "${STREAM_ACCESS_KEY}"
-      STREAM_ALLOWED_ORIGINS: "https://discord.com"
+      STREAM_ALLOWED_ORIGINS: "${STREAM_ALLOWED_ORIGINS:-https://discord.com}"
       STREAM_ROOM_SALT: "${STREAM_ROOM_SALT}"
     ports:
       - "8787:8787"
