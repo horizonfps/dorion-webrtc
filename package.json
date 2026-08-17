@@ -7,7 +7,7 @@
     "build:stream-server": "esbuild --bundle --platform=node --format=esm --target=node22 --outfile=dist/stream-server/index.js services/stream-server/index.ts",
     "dev": "pnpm build:js && tauri dev",
     "dev:stream-server": "tsx services/stream-server/index.ts",
-    "build:updater": "cd updater && cargo build --release && cd .. && cp updater/target/release/updater src-tauri/updater",
+    "build:updater": "cargo build --release --manifest-path updater/Cargo.toml && node scripts/copy-updater.mjs",
     "preview": "vite preview",
     "start:stream-server": "node dist/stream-server/index.js",
     "tauri": "tauri",
