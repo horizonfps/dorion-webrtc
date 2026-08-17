@@ -1,0 +1,34 @@
+services:
+  livekit:
+    image: livekit/livekit-server:v1.9.10
+    command:
+      - --bind
+      - 0.0.0.0
+      - --keys
+      - "${LIVEKIT_API_KEY}: ${LIVEKIT_API_SECRET}"
+      - --node-ip
+      - "${LIVEKIT_NODE_IP:-127.0.0.1}"
+      - --udp-port
+      - "7882"
+    ports:
+      - "7880:7880"
+      - "7881:7881"
+      - "7882:7882/udp"
+    restart: unless-stopped
+
+  stream-server:
+    build:
+      context: ..
+      dockerfile: services/stream-server/Dockerfile
+    depends_on:
+      - livekit
+    environment:
+      LIVEKIT_API_KEY: "${LIVEKIT_API_KEY}"
+      LIVEKIT_API_SECRET: "${LIVEKIT_API_SECRET}"
+      LIVEKIT_PUBLIC_URL: "${LIVEKIT_PUBLIC_URL}"
+      STREAM_ACCESS_KEY: "${STREAM_ACCESS_KEY}"
+      STREAM_ALLOWED_ORIGINS: "https://discord.com"
+      STREAM_ROOM_SALT: "${STREAM_ROOM_SALT}"
+    ports:
+      - "8787:8787"
+    restart: unless-stopped

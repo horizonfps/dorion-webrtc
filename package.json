@@ -4,10 +4,15 @@
   "type": "module",
   "scripts": {
     "build:js": "vite build && esbuild --bundle --minify --target=es6 --outfile=src-tauri/injection/postinject_min.js src-tauri/injection/postinject.ts && esbuild --bundle --minify --target=es6 --outfile=src-tauri/injection/preinject_min.js src-tauri/injection/preinject.ts",
+    "build:stream-server": "esbuild --bundle --platform=node --format=esm --target=node22 --outfile=dist/stream-server/index.js services/stream-server/index.ts",
     "dev": "pnpm build:js && tauri dev",
+    "dev:stream-server": "tsx services/stream-server/index.ts",
     "build:updater": "cd updater && cargo build --release && cd .. && cp updater/target/release/updater src-tauri/updater",
     "preview": "vite preview",
+    "start:stream-server": "node dist/stream-server/index.js",
     "tauri": "tauri",
+    "test": "vitest run",
+    "typecheck:stream-server": "tsc --noEmit -p services/stream-server/tsconfig.json",
     "format": "cargo fmt --manifest-path ./src-tauri/Cargo.toml --all && prettier src -w",
     "format:updater": "cargo fmt --manifest-path ./updater/Cargo.toml --all",
     "lint": "eslint ./src-tauri/injection/**/*.ts",
@@ -22,14 +27,20 @@
     "@eslint/eslintrc": "^3.3.6",
     "@eslint/js": "^9.39.5",
     "@tauri-apps/cli": "^2.11.4",
+    "@types/node": "^26.2.0",
     "@typescript-eslint/eslint-plugin": "^8.65.0",
     "@typescript-eslint/parser": "^8.65.0",
     "esbuild": "^0.28.1",
     "eslint": "^9.39.5",
     "globals": "^15.15.0",
     "prettier": "^3.9.6",
+    "tsx": "^4.23.12",
     "typescript": "^5.9.3",
-    "vite": "^8.1.5"
+    "vite": "^8.1.5",
+    "vitest": "^4.1.10"
   },
-  "packageManager": "pnpm@11.17.0"
+  "packageManager": "pnpm@11.17.0",
+  "dependencies": {
+    "livekit-server-sdk": "^2.17.0"
+  }
 }
