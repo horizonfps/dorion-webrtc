@@ -65,7 +65,6 @@ window.Dorion = {
   }
 
   const debug = !window.__DORION_CONFIG__.client_plugins
-  console.log(window.__DORION_CONFIG__)
   const INJECTED_PLUGIN_OPTIONS = {
     isVisible: true,
     allowedActions: { toggle: debug },

@@ -1,5 +1,6 @@
 import { applyExtraCSS } from './shared/ui'
 import { initWindowsKeybinds } from './shared/windows_keybinds'
+import { initStreaming } from './streaming'
 
 (async () => {
   console.log('Discord is loaded!')
@@ -11,6 +12,7 @@ import { initWindowsKeybinds } from './shared/windows_keybinds'
   initWindowsKeybinds()
   // Load up our extra css
   applyExtraCSS()
+  initStreaming()
 
   // The comment ahead is read by tauri and used to insert theme injection code
 

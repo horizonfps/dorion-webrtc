@@ -40,6 +40,11 @@ pub struct Config {
   pub tray_icon_enabled: Option<bool>,
   pub proxy_uri: Option<String>,
 
+  pub stream_enabled: Option<bool>,
+  pub stream_server_url: Option<String>,
+  pub stream_access_key: Option<String>,
+  pub stream_auto_connect: Option<bool>,
+
   pub keybinds: Option<HashMap<String, Vec<KeyStruct>>>,
   pub keybinds_enabled: Option<bool>,
 
@@ -87,6 +92,11 @@ impl Config {
       tray_icon_enabled: Option::from(true),
       proxy_uri: Option::from("".to_string()),
 
+      stream_enabled: Option::from(true),
+      stream_server_url: Option::from("http://127.0.0.1:8787".to_string()),
+      stream_access_key: Option::from("".to_string()),
+      stream_auto_connect: Option::from(true),
+
       keybinds: Option::from(HashMap::new()),
       keybinds_enabled: Option::from(true),
 
@@ -133,6 +143,11 @@ impl Config {
       client_plugins: other.client_plugins.or(self.client_plugins),
       tray_icon_enabled: other.tray_icon_enabled.or(self.tray_icon_enabled),
       proxy_uri: other.proxy_uri.or(self.proxy_uri.clone()),
+
+      stream_enabled: other.stream_enabled.or(self.stream_enabled),
+      stream_server_url: other.stream_server_url.or(self.stream_server_url.clone()),
+      stream_access_key: other.stream_access_key.or(self.stream_access_key.clone()),
+      stream_auto_connect: other.stream_auto_connect.or(self.stream_auto_connect),
 
       keybinds: other.keybinds.or(self.keybinds.clone()),
       keybinds_enabled: other.keybinds_enabled.or(self.keybinds_enabled),
