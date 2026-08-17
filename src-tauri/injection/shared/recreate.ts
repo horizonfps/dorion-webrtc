@@ -160,7 +160,7 @@ export function proxyNotification() {
   window.nativeNotification = window.Notification
 
   // @ts-expect-error shut up
-  window.Notification = function(...args) {
+  window.Notification = function(..._args) {
     // Stub this
   }
 

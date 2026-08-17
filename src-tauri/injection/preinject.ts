@@ -239,15 +239,15 @@ async function handleThemeInjection() {
 
   // This will use the DOM in a funky way to validate the css, then we make sure to fix up quotes
   const cleanContents = cssSanitize(localized)?.replaceAll('\\"', '\'')
+  const escapedContents = cleanContents
+    ?.replace(/`/g, '\\`')
+    .replace(/\\8/g, '')
+    .replace(/\\9/g, '')
 
   return `;(() => {
     const ts = document.querySelector('#dorion-theme')
     ts.textContent = \`
-      ${cleanContents?.replace(/`/g, '\\`')
-      // To this day I do not know why I need to do this
-      .replace(/\\8/g, '')
-      .replace(/\\9/g, '')
-    }
+      ${escapedContents}
     \`
 
     console.log('[Theme Loader] Appending Styles')
@@ -270,15 +270,15 @@ async function handleClientModThemeInjection() {
 
   // This will use the DOM in a funky way to validate the css, then we make sure to fix up quotes
   const cleanContents = cssSanitize(themeContents)?.replaceAll('\\"', '\'')
+  const escapedContents = cleanContents
+    ?.replace(/`/g, '\\`')
+    .replace(/\\8/g, '')
+    .replace(/\\9/g, '')
 
   return `;(() => {
     const ts = document.querySelector('#dorion-client-mods-themes')
     ts.textContent = \`
-      ${cleanContents?.replace(/`/g, '\\`')
-      // To this day I do not know why I need to do this
-      .replace(/\\8/g, '')
-      .replace(/\\9/g, '')
-    }
+      ${escapedContents}
     \`
 
     console.log('[Theme Loader] Appending Client Mod Styles')
